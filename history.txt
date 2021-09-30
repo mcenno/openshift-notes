@@ -1,0 +1,1000 @@
+   45  ls -la
+   46  rm -rf DO288-apps/
+   47  cd
+   48  git clone https://github.com/mcenno/DO288-apps.git
+   49  ls -la
+   50  cd DO288-apps/
+   51  cat > test
+   52  git add test 
+   53  git commit -m "test"
+   54  git push
+   55  podman search rhel
+   56  podman pull 
+   57  podman search rhel|less
+   58  podman images list
+   59  podman image list
+   60  podman run rhel cat /etc/os-release
+   61  cd
+   62  cd .local/
+   63  ls -la
+   64  cd share/containers/
+   65  ls -la
+   66  cd storage/
+   67  ls -la
+   68  cd overlay
+   69  ls -la
+   70  cd
+   71  ls -la
+   72  podman image --help
+   73  podman images
+   74  podman images --help
+   75  podman images
+   76  ls -la
+   77  cd DO180-apps/
+   78  git log
+   79  cd
+   80  podman run rhel cat /etc/os-release
+   81  podman run rhel df -h
+   82  podman run rhel ls -la /
+   83  podman ps -a
+   84  podman container purge
+   85  podman container --help
+   86  podman container prune
+   87  curl http://10.88.0.2
+   88  curl http://10.88.0.2:8080
+   89  podman run httpd-24-rhel7
+   90  podman search httpd
+   91  podman run --help
+   92  printenv
+   93  env
+   94  printenv
+   95  env
+   96  podman search mysql
+   97  podman run registry.access.redhat.com/rhscl/mysql-56-rhel7
+   98  podman run -e MYSQL_ROOT_PASSWORD=testpass registry.access.redhat.com/rhscl/mysql-56-rhel7
+   99  podman login registry.redhat.io
+  100  podman run --name mysql-basic 
+  101  podman run --name mysql-basic -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55-d registry.redhat.io/rhel8/mysql-80:1
+  102  cd
+  103  ls -la
+  104  cd DO180-apps/
+  105  ls -la
+  106  cd
+  107  ls -la
+  108  history 
+  109  lab container-create start
+  110  ls -la
+  111  ls -la DO180
+  112  ls -la DO180/solutions/
+  113  ls -la DO180/solutions/container-create/
+  114  cat DO180/solutions/container-create/create_table.txt 
+  115  ls -la
+  116  podman ps -a
+  117  podman ps 
+  118  ls -la
+  119  lab manage-lifecycle start
+  120  ls -la
+  121  podman login registry.redhat.io
+  122  podman run --name mysql-db registry.redhat.io/rhel8/mysql-80:1
+  123  podman run --name mysql > -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 > -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 \
+  124  podman run --name mysql  -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 \
+  125  podman run --name mysql  -d -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55  registry.redhat.io/rhel8/mysql-80:1
+  126  podman ps
+  127  podman cp DO180/labs/manage-lifecycle/db.sql mysql:/
+  128  podman exec mysql /bin/bash -c 'mysql -uuser1 -pmypa55 items < /db.sql'
+  129  podman run --name mysql-2 -it  registry.redhat.io/rhel8/mysql-80:1 /bin/bash
+  130  podman ps -a
+  131  podman exec mysql /bin/bash -c 'mysql -uuser1 -pmypa55 -e "select * from items.Projects;"'
+  132  container prune
+  133  podman container prune
+  134  podman ps -a
+  135  podman inspect mysql
+  136  which lab
+  137  less /usr/local/bin/lab
+  138  lab manage-lifecycle finish
+  139  ls -la
+  140  man setenforce
+  141  man chcon
+  142  man semanage
+  143  podman 
+  144  podman --help
+  145  ls -la
+  146  podman unshare --help
+  147  podman 
+  148  podman --help
+  149  lab manage-storage start
+  150  ls -la
+  151  mkdir -pv /home/student/local/mysql
+  152  sudo semanage fcontext -a -t container_file_t '/home/student/local/mysql(/.*)?'
+  153  sudo restorecon -R /home/student/local/mysql
+  154  ls -ldZ /home/student/local/mysql
+  155  podman unshare chown 27:27 /home/student/local/mysql
+  156  ls -la
+  157  ls -la local/
+  158  ls -ldZ /home/student/local/mysql
+  159  podman login registry.redhat.io
+  160  podman pull registry.redhat.io/rhel8/mysql-80:1
+  161  podman run --name persist-db  -d -v /home/student/local/mysql:/var/lib/mysql/data  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55  registry.redhat.io/rhel8/mysql-80:1
+  162  podman ps
+  163  ls -la local/mysql/
+  164  podman unshare ls -ld /home/student/local/mysql/items
+  165  ls -ld local/mysql/items
+  166  ls -la
+  167  cd local
+  168  ls -la
+  169  podman unshare ls -ld mysql/
+  170  ls -ld mysql/
+  171  id
+  172  podman unshare id
+  173  podman unshare touch  file-1
+  174  ls -ld file-1
+  175  podman unshare ls -l file-1
+  176  ls -la
+  177  cd 
+  178  ls -la
+  179  podman unshare ls -la .bash_logout 
+  180  podman unshare ls -l /usr/sbin/fdisk
+  181  ls -ld /usr/sbin/fdisk
+  182  # root -> nobody
+  183  # student -> root
+  184  semanage fcontext -l |wc -l
+  185  sudo semanage fcontext -l |wc -l
+  186  ps -ef|grep -i mysqld
+  187  ps -efZ|grep -i mysqld
+  188  ip
+  189  lab manage-networking start
+  190  pwd
+  191  semanage fcontext -l | grep -i local
+  192  sudo semanage fcontext -l | grep -i local
+  193  sudo semanage fcontext -l | grep -i local|grep -i mysql
+  194  lab manage-networking start
+  195  lab manage-storage finish
+  196  lab manage-networking start
+  197  podman run --name mysqldb-port > -d -v /home/student/local/mysql:/var/lib/mysql/data -p 13306:3306  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 \
+  198  podman run --name mysqldb-port  -d -v /home/student/local/mysql:/var/lib/mysql/data -p 13306:3306  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55  -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55  registry.redhat.io/rhel8/mysql-80:1
+  199  podman ps
+  200  mysql -uuser1 -h 127.0.0.1 -pmypa55  -P13306 items < /home/student/DO180/labs/manage-networking/db.sql
+  201  podman exec -it mysql-port mysql -uroot items -e "select * from Item"
+  202  podman exec -it mysqlb-port mysql -uroot items -e "select * from Item"
+  203  podman ps
+  204  podman exec -it mysqldb-port mysql -uroot items -e "select * from Item"
+  205  mysql -uuser1 -h 127.0.0.1 -pmypa55 -P13306 items -e "select * from Item"
+  206  podman ps
+  207  ip
+  208  ip address
+  209  ps ef
+  210  ps -ef
+  211  ps aux
+  212  ps -aux
+  213  ps aux
+  214  history 
+  215  ps aux | grfep mysql
+  216  ps aux | grep mysql
+  217  nsenter 
+  218  lab manage-networking finish
+  219  cd
+  220  #podman run -d -v /registry:/var/lib/registry -p 5000:5000  docker.io/library/registry 
+  221  sudo mkdir /registry
+  222  sudo semanage fcontext -a -t container_file_t '/registry(/.*)?'
+  223  sudo restorecon -Rv /registry
+  224  sudo chmod 777 /registry
+  225  sudo restorecon -Rv /registry
+  226  sudo semanage fcontext -a -t container_file_t '/registry(/.*)?'
+  227  sudo restorecon -Rv /registry/
+  228  cat /etc/containers/registries.conf
+  229  less /etc/containers/registries.conf
+  230  podman search quay.io/rhel
+  231  podman search registry.access.redhat.com/rhel
+  232  podman search registry.access.redhat.com/rhel --list-tags
+  233  podman search --help
+  234  podman search registry.access.redhat.com/rhel --limit 5
+  235  ls -la
+  236  lab image-operations start
+  237  podman login quay.io
+  238  podman run -d --name official-httpd -p 8180:80 quay.io/redhattraining/httpd-parent
+  239  podman exec -it official-httpd /bin/bash
+  240  curl 127.0.0.1:8180/do180.html
+  241  podman diff
+  242  podman diff official-httpd
+  243  podman stop official-httpd
+  244  podman commit -a "Enno Middelberg" official-httpd do180-custom-httpd
+  245  podman images
+  246  less /usr/local/etc/ocp4.config 
+  247  source /usr/local/etc/ocp4.config 
+  248  podman tag do180-custom-httpd quay.io/${RHT_OCP4_QUAY_USER}/do180-custom-httpd:v1.0
+  249  podman images
+  250  podman push quay.io/ennomiddelberg/do180-custom-httpd:v1.0 
+  251  podman login quay.io
+  252  podman push quay.io/ennomiddelberg/do180-custom-httpd:v1.0 
+  253  podman image
+  254  podman images
+  255  podman rmi 67b82bb24829 
+  256  podman rmi localhost/do180-custom-httpd quay.io/ennomiddelberg/do180-custom-httpd
+  257  podman rmi localhost/do180-custom-httpd quay.io/ennomiddelberg/do180-custom-httpd:v1.0
+  258  podman rmi localhost/do180-custom-httpd:latest quay.io/ennomiddelberg/do180-custom-httpd:v1.0
+  259  podman images
+  260  podman ps
+  261  podman exec -it mysql-basic /bin/bash
+  262  lab container-create finish
+  263  who
+  264  lab container-create finish
+  265  mysql -uuser1 -pmypa55 --protocol tcp -h localhost
+  266  curl php-helloworld-cpnvqp-route.apps.eu46.prod.nextcle.com
+  267  oc get route
+  268  oc delete route/php-helloworld
+  269  podman pull quay.io/ennomiddelberg/do180-custom-httpd
+  270  podman pull quay.io/ennomiddelberg/do180-custom-httpd:v1.0
+  271  podman container ls
+  272  podman container ls -a
+  273  podman container prune
+  274  #podman run -d --name test-httpd -p 8280:80 
+  275  podman images
+  276  ${RHT_OCP4_QUAY_USER}/do180-custom-httpd:v1.0
+  277  ${RHT_OCP4_QUAY_USER}
+  278  source /usr/local/etc/ocp4.config
+  279  ${RHT_OCP4_QUAY_USER}
+  280  podman run -d --name test-httpd -p 8280:80 ennomiddelberg/do180-custom-httpd:v1.0
+  281  curl 127.0.0.1:8280/do180.html
+  282  lab image-operations finish
+  283  history | grep tag
+  284  man podman push
+  285  podman push do180-custom-httpd  docker://quay.io/${RHT_OCP4_QUAY_USER}/do180-custom-httpd:v1.1
+  286  podman images
+  287  podman push rhscl/mysql-57-rhel7  docker://quay.io/${RHT_OCP4_QUAY_USER}/push-mysql:123-latest
+  288  podman push rhscl/mysql-56-rhel7  docker://quay.io/${RHT_OCP4_QUAY_USER}/push-mysql:123-latest
+  289  podman push rhscl/mysql-56-rhel7  docker://quay.io/${RHT_OCP4_QUAY_USER}/do180-custom-httpd:v.1.0
+  290  podman push rhscl/mysql-56-rhel7  docker://quay.io/${RHT_OCP4_QUAY_USER}/do180-custom-httpd:v1.0
+  291  podman pull ghcr.io/stefanprodan/podinfo:6.0.0
+  292  podman push ghcr.io/stefanprodan/podinfo:6.0.0 docker://quay.io/${RHT_OCP4_QUAY_USER}/podinfo:6
+  293  podman login quay.io
+  294  podman push ghcr.io/stefanprodan/podinfo:6.0.0 docker://quay.io/${RHT_OCP4_QUAY_USER}/podinfo:6
+  295  skopeo copy containers-storage:ghcr.io/stefanprodan/podinfo:6.0.0 docker://quay.io/${RHT_OCP4_QUAY_USER}/podinfo:6-1
+  296  lab image-review start
+  297  podman pull quay.io/redhattraining/nginx:1.17
+  298  podman images
+  299  podman run -d --name official-nginx nginx:1.17 -p 8080:80
+  300  podman run -d --name official-nginx -p 8080:80 nginx:1.17
+  301  podman container prune
+  302  podman run -d --name official-nginx -p 8080:80 nginx:1.17
+  303  podman exec -it official-nginx bash
+  304  podman exec -it -l bash
+  305  curl 127.0.0.1:8080
+  306  podman stop -l
+  307  podman commit -a "Enno Middelberg" official-nginx do180/mynginx:v1.0-SNAPSHOT
+  308  podman images
+  309  podman run -d --name official-nginx-dev -p 8080:80 localhost/do180/mynginx:v1.0-SNAPSHOT 
+  310  curl 127.0.0.1:8080
+  311  podman exec -it -l bash
+  312  curl 127.0.0.1:8080
+  313  podman stop -l
+  314  podman commit -a "Enno Middelberg" official-nginx do180/mynginx:v1.0
+  315  podman ls
+  316  podman images
+  317  podman rmi localhost/do180/mynginx:v1.0-SNAPSHOT 
+  318  podman container prune
+  319  podman rmi localhost/do180/mynginx:v1.0-SNAPSHOT 
+  320  podman images
+  321  podman run -d --name my-nginx -p 8280:80 localhost/do180/mynginx:v1.0 
+  322  curl 127.0.0.1:8080
+  323  curl 127.0.0.1:8280
+  324  podman ps -a
+  325  podman stop my-nginx 
+  326  podman container prune
+  327  podman images
+  328  podman run -d --name my-nginx -p 8280:80 localhost/do180/mynginx:v1.0 
+  329  curl 127.0.0.1:8280
+  330  podman exec -it my-nginx bash
+  331  curl 127.0.0.1:8280
+  332  podman commit -a "Enno Middelberg" my-nginx do180/mynginx:v2.0
+  333  podman images
+  334  podman run -d --name my-nginx_2 -p 8380:80 localhost/do180/mynginx:v2.0 
+  335  curl 127.0.0.1:8380
+  336  lab image-review finish
+  337  cd
+  338  lab image-review finish
+  339  podman search ubi
+  340  podman search ubi | less
+  341  podman search ubi | grep 8
+  342  ls -la
+  343  which lab
+  344  less /usr/local/bin/lab
+  345  less .ICEauthority 
+  346  df -h
+  347  lab dockerfile-create start
+  348  cd
+  349  nano DO180/labs/dockerfile-create/Containerfile
+  350  cd DO180/labs/dockerfile-create/
+  351  podman build --layers=false -t do180/apache .
+  352  podman images
+  353  podman run --name lab-apache -d -p 10080:80 do180/apache
+  354  podman ps
+  355  podman rm -f my-nginx_2
+  356  podman ps
+  357  curl 127.0.0.1:10080
+  358  cd
+  359  lab dockerfile-create FINISH
+  360  lab dockerfile-create --help
+  361  lab dockerfile-create finish
+  362  oc get pods
+  363  ls -la
+  364  lab openshift-resources start
+  365  source /usr/local/etc/ocp4.config
+  366  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD${RHT_OCP4_MASTER_API}
+  367  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  368  oc new-project ${RHT_OCP4_DEV_USER}-mysql-openshift
+  369  oc new-app --template=mysql-persistent -p MYSQL_USER=user1 -p MYSQL_PASSWORD=mypa55 -p MYSQL_DATABASE=testdb -p MYSQL_ROOT_PASSWORD=r00tpa55 -p VOLUME_CAPACITY=10Gi
+  370  oc status
+  371  oc get pods
+  372  oc describe pod mysql-1-bscsv 
+  373  oc describe pod mysql-1-deploy
+  374  oc describe pod mysql-1-bscsv 
+  375  man less
+  376  alias
+  377  oc describe pod mysql-1-bscsv | less -S
+  378  oc get 
+  379  oc get  -h
+  380  oc get svc
+  381  oc describe service mysql
+  382  oc get pvc
+  383  oc describe pvc/mysql
+  384  oc port-forward 
+  385  oc port-forward -h
+  386  oc port-forward mysql-1-bscsv 3306:3306
+  387  oc project --help
+  388  oc options
+  389  oc project
+  390  oc describe cpnvqp-mysql-openshift
+  391  oc get projects
+  392  ls -la
+  393  ls -alrt
+  394  date
+  395  oc get pv
+  396  oc get pvc
+  397  oc delete project cpnvqp-mysql-openshift 
+  398  lab openshift-resources finish
+  399  oc --version
+  400  oc --help
+  401  oc version
+  402  oc get nodes
+  403  lab openshift-routes start
+  404  source /usr/local/etc/ocp4.config
+  405  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  406  ${RHT_OCP4_DEV_USER}
+  407  echo ${RHT_OCP4_DEV_USER}
+  408  oc new-project ${RHT_OCP4_DEV_USER}-route
+  409  oc new-app --docker-image=quay.io/redhattraining/php-hello-dockerfile --name php-helloworld
+  410  oc get pods -w
+  411  oc logs -f php-helloworld-74bb86f6cb-85jx6 
+  412  oc get svc
+  413  oc describe svc/php-helloworld
+  414  oc expose svc/php-helloworld
+  415  oc describe route
+  416  oc expose svc/php-helloworld --name=enno
+  417  oc get route
+  418  lab openshift-routes finish
+  419  lab openshift-s2i start
+  420  cd DO180-apps/
+  421  ls -la
+  422  git checkout master
+  423  git checkout -b s2i
+  424  git push --help
+  425  git push -u origin s2i
+  426  cat php-helloworld/index.php 
+  427  source /usr/local/etc/ocp4.config
+  428  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  429  oc new-project ${RHT_OCP4_DEV_USER}-s2i
+  430  oc new-app php:7.3 --name=php-helloworld https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#s2i 
+  431  oc new-app php:7.3 --name=php-helloworld https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#s2i --context-dir php-helloworld
+  432  oc get pods
+  433  oc logs --all-containers -f php-helloworld-1-build 
+  434  oc get pods
+  435  oc logs --all-containers -f php-helloworld-1-build 
+  436  echo ${RHT_OCP4_GITHUB_USER}
+  437  oc describe deployment php-helloworld
+  438  oc get svc
+  439  oc expose service php-helloworld --name ${RHT_OCP4_DEV_USER}-helloworld
+  440  oc get route
+  441  oc get route -o jsonpath='{..spec.host}{"\n"}'
+  442  cd ~/DO180-apps/php-helloworld/
+  443  nano index.php 
+  444  git add .
+  445  git commit -m "Changed index.php"
+  446  git push origin s2i
+  447  oc start-build php-helloworld 
+  448  oc logs php-helloworld-2-build -f
+  449  oc get pods
+  450  lab openshift-s2i finish
+  451  lab openshift-review start
+  452  ..
+  453  pwd
+  454  ..
+  455  ls -la
+  456  cd ..
+  457  ls -la
+  458  cd temps
+  459  ls -la
+  460  less index.php 
+  461  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  462  oc new-project temps-${RHT_OCP4_DEV_USER}-ocp
+  463  history 
+  464  oc new-app php:7.3 --name=php-temps https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#master --context-dir temps
+  465  history 
+  466  oc get pods
+  467  oc logs php-temps-1-build -f
+  468  oc get pods
+  469  history 
+  470  oc get service
+  471  oc expose service php-temps --name temps-${RHT_OCP4_DEV_USER}-ocp
+  472  oc get route
+  473  oc route --help
+  474  oc delete --help
+  475  oc delete route temps-cpnvqp-ocp 
+  476  oc expose service php-temps 
+  477  oc get route
+  478  oc delete route php-temps 
+  479  oc expose service php-temps --hostname temps-cpnvqp-ocp
+  480  oc get route
+  481  oc delete route php-temps 
+  482  oc expose service php-temps --hostname temps-cpnvqp-ocp.apps.eu46.prod.nextcle.com
+  483  oc get route
+  484  lab openshift-review grade
+  485  less /usr/local/lib/lab-openshift-review 
+  486  oc delete route php-temps 
+  487  oc expose service php-temps --name temps --hostname temps-cpnvqp-ocp.apps.eu46.prod.nextcle.com
+  488  lab openshift-review grade
+  489  oc get deploy
+  490  lab openshift-review finish
+  491  cd
+  492  git clone https://github.com/mcenno/flask-demo.git
+  493  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  494  oc get projects
+  495  oc new-project 
+  496  oc new-project flask-demo
+  497  oc get projects
+  498  oc delete project temps-cpnvqp-ocp 
+  499  oc get projects
+  500  oc new-app python --name=flask-demo https://github.com/mcenno/flask-demo.git
+  501  oc logs -f buildconfig/flask-demo
+  502  oc get pods
+  503  oc logs flask-demo-5744597f-5rlv7 
+  504  cd flask-demo/
+  505  ls -la
+  506  git rename demo.py app.py
+  507  git mv demo.py app.py
+  508  RESET
+  509  reset
+  510  cd flask-demo/
+  511  git status
+  512  git commit -m "Renames a file"
+  513  git push
+  514  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  515  source /usr/local/etc/ocp4.config
+  516  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  517  oc new-app python --name=flask-demo https://github.com/mcenno/flask-demo.git
+  518  oc logs -f buildconfig/flask-demo
+  519  oc get pods
+  520  oc logs -f buildconfig/flask-demo-1-build
+  521  oc logs -f pods flask-demo-5744597f-5rlv7
+  522  oc logs  pods flask-demo-5744597f-5rlv7
+  523  oc logs  pods/flask-demo-5744597f-5rlv7
+  524  ls -la
+  525  oc get app
+  526  oc get apps
+  527  oc get pods
+  528  oc start-build
+  529  oc get buildconfig
+  530  oc start-build flask-demo
+  531  oc get pods
+  532  oc logs pods flask-demo-2-build
+  533  oc logs flask-demo-2-build
+  534  oc get svc
+  535  oc expose service flask-demo  --name flask --hostname flask.apps.eu46.prod.nextcle.com
+  536  oc get svc
+  537  oc get routes
+  538  cat app.py 
+  539  oc get routes
+  540  oc delete route flask
+  541  oc get pods
+  542  oc describe flask-demo-2-build
+  543  oc describe pods/flask-demo-2-build
+  544  oc describe pods/flask-demo-2-build | less -S
+  545  oc get pods
+  546  oc get routes
+  547  cat app.py 
+  548  oc get pods
+  549  oc get svc
+  550  oc get routes
+  551  oc expose service flask-demo  --name flask --hostname enno-flask.apps.eu46.prod.nextcle.com --target-port=80
+  552  oc expose service flask-demo  --name flask --hostname enno-flask.apps.eu46.prod.nextcle.com --port=80
+  553  oc get routes
+  554  oc logs flask-demo-77cf797bf5-2dj9b
+  555  nano app.py
+  556  git commit -am "Changes port to 8081"
+  557  git push
+  558  oc start-build flask-demo
+  559  oc get pods
+  560  oc log -f flask-demo-3-build
+  561  oc logs -f flask-demo-3-build
+  562  oc get pods
+  563  oc describe route flask
+  564  oc get route
+  565  oc get svc
+  566  oc edit svc flask-demo
+  567  # EDITOR=nano oc edit svc flask-demo
+  568  oc get svc
+  569  oc describe svc flask-demo 
+  570  oc delete route flask
+  571  oc expose service flask-demo  --name flask --hostname enno-flask.apps.eu46.prod.nextcle.com 
+  572  curl enno-flask.apps.eu46.prod.nextcle.com
+  573  oc describe route flask 
+  574  oc scale --replicas=2 deployment/flask-demo
+  575  oc describe route flask 
+  576  curl enno-flask.apps.eu46.prod.nextcle.com;echo
+  577  # 0 - 100
+  578  # 3 Pods
+  579  # <33 -< Pod 1
+  580  # <50 -< Pod 2
+  581  #     -< Pod 3
+  582  # <25
+  583  # <33
+  584  # <50
+  585  # ...
+  586  cd
+  587  oc delete project flask-demo
+  588  oc projects
+  589  oc delete project vjjmiras-project
+  590  oc policy remove-role-from-user edit jpcfpp
+  591  oc get projects
+  592  oc status
+  593  oc get vjjmiras-project
+  594  oc projects
+  595  oc project vjjmiras-project 
+  596  oc status
+  597  oc status --suggest
+  598  oc project --loglevel 6
+  599  oc logs webserver-5f556d49f9-q9k9x -c webserver
+  600  oc status
+  601  lab build-template start
+  602  cd ~/DO288-apps/
+  603  git status
+  604  git checkout main
+  605  ls -la
+  606  ls -la quotes/
+  607  less quotes/get.php 
+  608  less ~/DO288/labs/build-template/php-mysql-ephemeral.json 
+  609  cat ~/DO288/labs/build-template/php-mysql-ephemeral.json
+  610  source /usr/local/etc/ocp4.config
+  611  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  612  oc get templates -n openshift | grep php
+  613  oc new-project ${RHT_OCP4_DEV_USER}-common
+  614  oc create -f ~/DO288/labs/build-template/php-mysql-ephemeral.json
+  615  oc new-project ${RHT_OCP4_DEV_USER}-build-template
+  616  oc describe template php-mysql-ephemeral
+  617  oc get projects
+  618  oc get templates
+  619  oc describe template php-mysql-ephemeral -n ${RHT_OCP4_DEV_USER}-common
+  620  cat ~/DO288/labs/build-template/create-app.sh 
+  621  ~/DO288/labs/build-template/create-app.sh 
+  622  oc logs -f bc/quotesapi
+  623  watch oc get pod
+  624  oc get pod
+  625  oc get route
+  626  curl -si http://quote-$RHT_OCP4_DEV_USER.$RHT_OCP4_WILCARD_DOMAIN/get.php
+  627  curl -si quote-cpnvqp.apps.eu46.prod.nextcle.com/get.php
+  628  oc describe svc quotesdb
+  629  oc describe pod quotesdb-6b7ffcc649-z4xgt
+  630  oc status
+  631  oc status --suggest
+  632  oc describe pod quotesdb-6b7ffcc649-z4xgt
+  633  oc describe svc quotesdb
+  634  oc describe pod quotesdb-6b7ffcc649-z4xgt
+  635  oc get pods
+  636  oc describe pod quotesapi-7b9b47dc74-q8qvv 
+  637  oc describe pod quotesapi-7b9b47dc74-q8qvv | grep -A 5 Environment#
+  638  oc describe pod quotesapi-7b9b47dc74-q8qvv | grep -A 5 Environment
+  639  oc describe pod quotesdb-6b7ffcc649-z4xgt | grep -A 5 Environment
+  640  oc rsh quotesapi-7b9b47dc74-q8qvv bash -c 'echo > /dev/tcp/$DATABASE_SERVICE_NAME/3306 && echo OK || FAIL'
+  641  oc logs quotesapi-7b9b47dc74-q8qvv
+  642  oc exec -it quotesdb-6b7ffcc649-z4xgt bash
+  643  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-6b7ffcc649-z4xgt:/tmp/quote.sql
+  644  oc rsh -t quotesdb-6b7ffcc649-z4xgt
+  645  curl -si quote-cpnvqp.apps.eu46.prod.nextcle.com/get.php
+  646  cd
+  647  oc get projects
+  648  less ~/DO288/labs/build-template/create-app.sh 
+  649  less ~/DO288/labs/build-template/php-mysql-ephemeral.json 
+  650  oc get route
+  651  oc get route -n openshift-console
+  652  lab build-template finish
+  653  lab deploy-image start
+  654  lab deploy-image finish
+  655  lab container-build start
+  656  less ~/DO288/labs/container-build/httpd-parent/Containerfile 
+  657  source /usr/local/etc/ocp4.config
+  658  cd
+  659  cd DO288-apps/
+  660  git status
+  661  git checkout main
+  662  git checkout -b container-build
+  663  git push -u origin container-build 
+  664  less ~/DO288-apps/container-build/Containerfile 
+  665  less ~/DO288-apps/container-build/src/index.html 
+  666  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  667  oc new-project ${RHT_OCP4_DEV_USER}-container-build
+  668  #podman build --layer=false -t do288-apache 
+  669  pwd
+  670  ls -la
+  671  l container-build/
+  672  ls -la container-build/
+  673  podman build --layer=false -t do288-apache ./container-build/
+  674  podman build --layers=false -t do288-apache ./container-build/
+  675  podman images
+  676  podman tag do288-apache quay.io/cpnvqp/do288-apache
+  677  podman images
+  678  podman login quay.io -u cpnvqp 
+  679  podman login quay.io -u ennomiddelberg
+  680  podman push quay.io/cpnvqp/do288-apache
+  681  podman tag do288-apache quay.io/ennomiddelberg/do288-apache
+  682  podman images
+  683  podman push quay.io/ennomiddelberg/do288-apache
+  684  cd
+  685  oc new-app --name hola quay.io/ennomiddelberg/do288-apache
+  686  oc status
+  687  oc get pods
+  688  oc logs hola-5899b4587c-7dd56 
+  689  oc logs -f hola-5899b4587c-7dd56 
+  690  oc delete all -l app=hola
+  691  cd ~/DO288-apps/container-build/Con
+  692  cd ~/DO288-apps/container-build/
+  693  l
+  694  ls -la
+  695  nano Containerfile 
+  696  git status
+  697  git commit -am "Changes child Containerfile"
+  698  git push
+  699  cd
+  700  podman images
+  701  podman rmi -a --force
+  702  podman images
+  703  podman build --layers=false -t do288-apache ./container-build/
+  704  cd DO288-apps/
+  705  podman build --layers=false -t do288-apache ./container-build/
+  706  podman tag do288-apache quay.io/ennomiddelberg/do288-apache
+  707  podman images
+  708  oc new-app --name hola quay.io/ennomiddelberg/do288-apache
+  709  oc get pods
+  710  oc logs hola-5899b4587c-rcv4s hola 
+  711  ls -la container-build/
+  712  cd container-build/
+  713  ls -la
+  714  less Containerfile 
+  715  cat Containerfile 
+  716  podman run -it quay.io/redhattraining/httpd-parent bash
+  717  cat Containerfile 
+  718  podman run -it quay.io/redhattraining/httpd-parent bash
+  719  history 
+  720  podman push quay.io/ennomiddelberg/do288-apache
+  721  oc start-build 
+  722  oc get buildconfig
+  723  oc get pod
+  724  oc get is
+  725  oc describe is hola
+  726  oc import-image hola:latest
+  727  oc describe is hola
+  728  oc get pods
+  729  oc describe deployment hola
+  730  oc describe is hola
+  731  oc get route
+  732  oc get pods
+  733  oc expose --port='8080' svc/hola
+  734  oc get route
+  735  curl http://hola-${RHT_OCP4_DEV_USER}-container-build.${RHT_OCP4_WILDCARD_DOMAIN}
+  736  curl http://hola-${RHT_OCP4_DEV_USER}-container-build.${RHT_OCP4_WILDCARD_DOMAIN}:8080
+  737  oc get route
+  738  curl hola-cpnvqp-container-build.apps.eu46.prod.nextcle.com
+  739  oc get route
+  740  curl http://hola-cpnvqp-container-build.apps.eu46.prod.nextcle.com:8080
+  741  curl http://hola-cpnvqp-container-build.apps.eu46.prod.nextcle.com
+  742  oc get pods
+  743  oc exec -it hola-5d6c48598-hcjrm bash
+  744  curl http://hola-cpnvqp-container-build.apps.eu46.prod.nextcle.com/index.html
+  745  lab container-build finish
+  746  lab app-config start
+  747  cd
+  748  cd DO288-apps/
+  749  ls -la
+  750  git checkout main
+  751  git log
+  752  git checkout -b app-config
+  753  pit push -u origin app-config
+  754  git push -u origin app-config
+  755  less app-config/app.js 
+  756  source /usr/local/etc/ocp4.config
+  757  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  758  oc new-project ${RHT_OCP4_DEV_USER}-app-config
+  759  cat ~/DO288/labs/app-config/oc-new-app.sh 
+  760  oc new-app  --as-deployment-config --name myapp    --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs    "nodejs:10~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#app-config"     --context-dir app-config
+  761  oc pods
+  762  oc get pods -w
+  763  oc logs myapp-1-build 
+  764  oc get pods
+  765  oc get svc
+  766  oc expose svc myapp
+  767  oc get route
+  768  curl myapp-cpnvqp-app-config.apps.eu46.prod.nextcle.com
+  769  oc create configmap myappconf --from-literal APP_MSG="Test Message"
+  770  oc describe cm/myappconf
+  771  curl myapp-cpnvqp-app-config.apps.eu46.prod.nextcle.com
+  772  cat ~/DO288-apps/app-config/myapp.sec 
+  773  oc create secret generic myappfilesec --from-file ~/DO288-apps/app-config/myapp.sec
+  774  oc get secrets
+  775  oc describe myappfilesec
+  776  oc describe secrets/myappfilesec
+  777  oc describe secrets/myappfilesec --loglevel 6
+  778  oc get secret/myappfilesec -o json
+  779  oc set env deployment/myapp --from configmap/myappconf
+  780  oc get deployments
+  781  oc get deployment
+  782  oc get pods
+  783  oc get deployment
+  784  oc get deploymentsa
+  785  oc get deployments
+  786  oc set env deployment/myapp --from configmap/myappconf
+  787  oc get deploy
+  788  # oc new-app  --as-deployment-config --name myapp    --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs    "nodejs:10~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#app-config"     --context-dir app-config
+  789  history
+  790  oc get all
+  791  cat ~/DO288/labs/app-config/
+  792  cat ~/DO288/labs/app-config/oc-new-app.sh 
+  793  oc set env deploymentconfig/myapp --from configmap/myappconf
+  794  oc get pods
+  795  curl myapp-cpnvqp-app-config.apps.eu46.prod.nextcle.com
+  796  oc set volume deploymentconfig/myapp --add -t secret -m /opt/app-root/secure --name myappsec-vol --secret-name myappfilesec
+  797  oc get pods
+  798  oc status
+  799  oc status --suggest
+  800  oc get pods
+  801  curl myapp-cpnvqp-app-config.apps.eu46.prod.nextcle.com
+  802  lab app-config finish
+  803  lab design-container start
+  804  cd ~/DO288-apps/hello-java/
+  805  git checkout -b design-container
+  806  ls -la
+  807  less Containerfile 
+  808  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  809  history | grep new-app
+  810  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  811  git status
+  812  git push -u origin design-container
+  813  podman build --layers=false -t do288-hello-java .
+  814  podman tag do288-hello-java quay.io/ennomiddelberg/do288-hello-java
+  815  podman push quay.io/ennomiddelberg/do288-hello-java
+  816  podman login quay.io -u ennomiddelberg
+  817  podman push quay.io/ennomiddelberg/do288-hello-java
+  818  oc get projects
+  819  oc new-app --name elvis quay.io/ennomiddelberg/do288-hello-java
+  820  oc login
+  821  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  822  history | grep new-app
+  823  oc new-app --name elvis quay.io/ennomiddelberg/do288-hello-java
+  824  podman images
+  825  oc new-app --name elvis quay.io/ennomiddelberg/do288-hello-java
+  826  oc get pods
+  827  oc logs elvis-f744ddcc6-k56rw 
+  828  pwd
+  829  ls -la
+  830  nano Containerfile 
+  831  git status
+  832  git commit -am "Comments out user wildfly"
+  833  git push
+  834  podman build --layers=false -t do288-hello-java .
+  835  podman tag do288-hello-java quay.io/ennomiddelberg/do288-hello-java
+  836  podman push
+  837  podman push quay.io/ennomiddelberg/do288-hello-java
+  838  history 
+  839  oc delete project cpnvqp-design-container 
+  840  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  841  oc delete project cpnvqp-design-container 
+  842  oc get projects
+  843  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  844  oc get projects
+  845  oc new-app --name elvis quay.io/ennomiddelberg/do288-hello-java
+  846  oc get pods
+  847  oc get pods -w
+  848  oc get pods
+  849  oc logs elvis-847f95bfc4-ks72g 
+  850  nano  Containerfile 
+  851  git commit -am "More user modifications"
+  852  git push
+  853  podman rmi -a --force
+  854  podman build --layers=false -t do288-hello-java .
+  855  podman tag do288-hello-java quay.io/ennomiddelberg/do288-hello-java
+  856  podman push quay.io/ennomiddelberg/do288-hello-java
+  857  oc delete project cpnvqp-design-container 
+  858  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  859  oc delete project cpnvqp-design-container 
+  860  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  861  oc get projects
+  862  oc delete project cpnvqp-design-container 
+  863  oc new-project ${RHT_OCP4_DEV_USER}-design-container
+  864  oc new-app --name elvis quay.io/ennomiddelberg/do288-hello-java
+  865  oc pods -w
+  866  oc get pods -w
+  867  oc get pods 
+  868  #oc expose svc myapp
+  869  oc get services
+  870  oc expose svc elvis
+  871  oc get routes
+  872  oc create configmap appconfig --from-literal APP_MSG="Elvis lives"
+  873  oc set env deployment/elvis --from configmap/appconfig
+  874  oc get pods -w
+  875  oc get pods 
+  876  oc get rs
+  877  oc rollback deployment/elvis
+  878  oc get rs
+  879  oc get deploy
+  880  oc rollout undo deployment/elvis
+  881  oc get rs
+  882  oc get pods
+  883  oc logs elvis-6f5b864897-kpqx2
+  884  oc get pods
+  885  oc rollout status
+  886  oc rollout history
+  887  oc rollout history deploy/elvis
+  888  oc get rs
+  889  oc rollout status deploy/elvis
+  890  oc get is
+  891  oc describe is elvis
+  892  oc get bc
+  893  git log
+  894  git diff 93ca00add4656920ef3a778f1838436a46bd6a7c 7a0b3bd2e61883edace62545eb27fac575aa1322
+  895  git diff  7a0b3bd2e61883edace62545eb27fac575aa1322 0370c852c4bbcb6c4ae62f1cee40eb1e888d3e8c 
+  896  git checkout 0370c852c4bbcb6c4ae62f1cee40eb1e888d3e8c
+  897  git checkout -b s2i-perms
+  898  git push -u origin s2i-perms
+  899  oc new-project enno-s2i-perms
+  900  oc new-app --name elvis --context-dir hello-java https://github.com/mcenno/DO288-apps#s2i-perms
+  901  ls -l
+  902  ln Containerfile Dockerfile
+  903  git add Dockerfile 
+  904  git commit -m 'added Dockerfile to hello-java'
+  905  git push
+  906  oc new-app --name elvis --context-dir hello-java https://github.com/mcenno/DO288-apps#s2i-perms
+  907  oc logs -f bc/elvis
+  908  oc get pods -w
+  909  oc logs elvis-689d745cbd-shhbr
+  910  ls
+  911  ls -ld run-app.sh 
+  912  oc debug pod/elvis-689d745cbd-shhbr
+  913  oc describe project s2i-perms
+  914  oc describe project enno-s2i-perms
+  915  ls
+  916  vim Dockerfile 
+  917  git commit -am 'Updated Dockerfile to a silly USER'
+  918  git push
+  919  oc start-build -F bc/elvis
+  920  oc get pods -w
+  921  oc rsh elvis-b7ff794fb-mjq5r
+  922  vim Dockerfile 
+  923  git commit -am 'Updated Dockerfile to group 0/root'
+  924  git push
+  925  oc start-build -F bc/elvis
+  926  oc get pods-w
+  927  oc get pods -w
+  928  oc rsh elvis-6796f86c67-4x4r9
+  929  vim Dockerfile 
+  930  oc rsh elvis-6796f86c67-4x4r9
+  931  oc explain pod.spec.containers.securityContext
+  932  oc edit deployment/elvis
+  933  oc get pods -w
+  934  oc describe project enno-s2i-perms
+  935  oc get pods -w
+  936  oc rsh elvis-6d84f9498f-nq544
+  937  oc edit deployment/elvis
+  938  oc get pods -w
+  939  oc edit deployment/elvis
+  940  oc get events
+  941  ps -ef
+  942  oc debug --help
+  943  podman login quay.io -u ennomiddelberg
+  944  man chmod
+  945  lab design-container stop
+  946  lab design-container finish
+  947  cd
+  948  lab expose-registry start
+  949  source /usr/local/etc/ocp4.config
+  950  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  951  oc get route -n openshift-image-registry
+  952  INTERNAL_REGISTRY=$( oc get route default-route -n openshift-image-registry -o jsonpath='openshift-image-registryspec.host}' )
+  953  echo $INTERNAL_REGISTRY 
+  954  INTERNAL_REGISTRY=$( oc get route default-route -n openshift-image-registry -o jsonpath='openshift-image-registry{.spec.host}' )
+  955  echo $INTERNAL_REGISTRY 
+  956  echo ${INTERNAL_REGISTRY}
+  957  INTERNAL_REGISTRY=$( oc get route default-route -n openshift-image-registry -o jsonpath='{.spec.host}' )
+  958  echo ${INTERNAL_REGISTRY}
+  959  oc new-project ${RHT_OCP4_DEV_USER}-common
+  960  oc whoami -t
+  961  TOKEN=$(oc whoami -t)
+  962  echo $TOKEN
+  963  ls -la ~/DO288/labs/expose-registry/ubi-info/
+  964  ls -la ~/DO288/labs/expose-registry/ubi-info/blobs/
+  965  ls -la ~/DO288/labs/expose-registry/ubi-info/blobs/sha256/
+  966  file  ~/DO288/labs/expose-registry/ubi-info/blobs/sha256/35de0dda82a8572fe506aa54634f209464df5c05b5d9b955557db10bd86a4fc5 
+  967  less ~/DO288/labs/expose-registry/ubi-info/blobs/sha256/35de0dda82a8572fe506aa54634f209464df5c05b5d9b955557db10bd86a4fc5
+  968  skopeo copy --dest-creds=cpnvqp:${TOKEN} oci:/home/student/DO288/labs/expose-registry/ubi-info docker://${INTERNAL_REGISTRY}/cpnvqp-common/ubi-info:1.0
+  969  oc get is
+  970  history 
+  971  podman login -u cpnvqp -p ${TOKEN} ${INTERNAL_REGISTRY}
+  972  podman pull ${INTERNAL_REGISTRY}/cpnvqp-common/ubi-info:1.0
+  973  podman run --name info default-route-openshift-image-registry.apps.eu46.prod.nextcle.com/cpnvqp-common/ubi-info:1.0
+  974  oc get is
+  975  oc delete is ubi-info
+  976  oc delete project cpnvqp-common 
+  977  podman rm info
+  978  podman ps
+  979  podman ps -a
+  980  podman images
+  981  podman images prune
+  982  podman images
+  983  podman image prune
+  984  podman images
+  985  podman image prune -a
+  986  podman image prune --help
+  987  podman container prune
+  988  podman container ls -a
+  989  podman image prune -a
+  990  podman images
+  991  podman images -a
+  992  lab expose-registry finish
+  993  podman login --help
+  994  lab expose-registry finish
+  995  lab image-stream start
+  996  source /usr/local/etc/ocp4.config
+  997  oc login -u ${RHT_OCP4_DEV_USER} -p  ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  998  oc get projects
+  999  oc delete project/enno-s2i-perms
+ 1000  oc new-project ${RHT_OCP4_DEV_USER}-common
+ 1001  skopeo inspect docker://quay.io/redhattraining/hello-world-nginx
+ 1002  oc import-image --help
+ 1003  oc import-image hello-world --confirm --from quay.io/redhattraining/hello-world-nginx 
+ 1004  oc get is
+ 1005  oc get is,istag
+ 1006  oc get istag
+ 1007  oc describe is hello-world | less
+ 1008  oc describe is hello-world 
+ 1009  oc new-project ${RHT_OCP4_DEV_USER}-image-stream
+ 1010  oc new-app --name hello -i ${RHT_OCP4_DEV_USER}-common/hello-world
+ 1011  oc get pod
+ 1012  oc expose svc hello
+ 1013  oc get route
+ 1014  curl hello-cpnvqp-image-stream.apps.eu46.prod.nextcle.com
+ 1015  oc get projects
+ 1016  of project cpnvqp-image-stream
+ 1017  oc# project cpnvqp-image-stream
+ 1018  oc project cpnvqp-image-stream
+ 1019  oc project cpnvqp-common
+ 1020  oc get pods
+ 1021  oc project cpnvqp-image-stream
+ 1022  oc pods
+ 1023  oc get is
+ 1024  oc import-image --help
+ 1025  history 
+ 1026  ls -la
+ 1027  cd
+ 1028  git clone https://github.com/mcenno/openshift-notes
+ 1029  git clone https://github.com/mcenno/openshift-notes.git
+ 1030  git clone https://github.com/mcenno/openshift-notes
+ 1031  git clone https://github.com/mcenno/openshift-notes.git
+ 1032  git clone https://github.com/mcenno/openshift-notes
+ 1033  history | grep clone
+ 1034  git clone https://github.com/mcenno/openshift-notes.git
+ 1035  mkdir tmp
+ 1036  cd tmp
+ 1037  git clone https://github.com/mcenno/DO288-apps.git
+ 1038  git clone https://github.com/mcenno/stromzaehler.git
+ 1039  cd
+ 1040  git clone https://github.com/mcenno/openshift-notes.git
+ 1041  cd openshift-notes/
+ 1042  l
+ 1043  ls -la
+ 1044  history > history.txt
